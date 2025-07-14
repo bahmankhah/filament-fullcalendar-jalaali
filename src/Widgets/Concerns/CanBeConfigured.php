@@ -20,4 +20,9 @@ trait CanBeConfigured
             $this->config(),
         );
     }
+
+    protected function isJalaali(): bool
+    {
+        return data_get($this->config(), 'jalaali', FilamentFullCalendarPlugin::get()->isJalaali());
+    }
 }

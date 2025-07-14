@@ -15,6 +15,91 @@ import rrulePlugin from '@fullcalendar/rrule'
 import momentPlugin from '@fullcalendar/moment'
 import momentTimezonePlugin from '@fullcalendar/moment-timezone'
 import locales from '@fullcalendar/core/locales-all'
+import moment from 'moment'
+import 'moment-jalaali'
+
+// Helper function to format Jalaali dates
+function formatJalaaliDate(date, format) {
+    return moment(date).format(format);
+}
+
+// Helper function to get Jalaali calendar configuration
+function getJalaaliConfig(jalaali) {
+    if (!jalaali) return {};
+    
+    return {
+        // Configure moment to use Jalaali calendar
+        viewClassNames: 'jalaali-calendar',
+        // Custom title formatter for Jalaali calendar
+        titleFormat: function(date) {
+            return moment(date.start).format('jMMMM jYYYY');
+        },
+        // Custom day header formatter for week view
+        dayHeaderFormat: function(date) {
+            const dayNames = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه'];
+            return dayNames[moment(date).day()];
+        },
+        // Custom event time formatter
+        eventTimeFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: false
+        },
+        // Custom navigation buttons
+        customButtons: {
+            prev: {
+                text: '‹',
+                click: function(arg) {
+                    arg.view.calendar.prev();
+                }
+            },
+            next: {
+                text: '›',
+                click: function(arg) {
+                    arg.view.calendar.next();
+                }
+            },
+            today: {
+                text: 'امروز',
+                click: function(arg) {
+                    arg.view.calendar.today();
+                }
+            }
+        },
+        // Override month names and day names for Jalaali
+        locale: 'fa',
+        direction: 'rtl',
+        // Custom view configurations
+        views: {
+            dayGridMonth: {
+                // Custom month view configuration
+                dayHeaderFormat: function(date) {
+                    const dayNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+                    return dayNames[moment(date).day()];
+                },
+                titleFormat: function(date) {
+                    return moment(date.start).format('jMMMM jYYYY');
+                }
+            },
+            dayGridWeek: {
+                titleFormat: function(date) {
+                    const startWeek = moment(date.start).format('jD jMMMM');
+                    const endWeek = moment(date.end).format('jD jMMMM jYYYY');
+                    return `${startWeek} - ${endWeek}`;
+                }
+            },
+            dayGridDay: {
+                titleFormat: function(date) {
+                    return moment(date.start).format('dddd، jD jMMMM jYYYY');
+                }
+            }
+        },
+        // Custom date formatting
+        dayCellContent: function(arg) {
+            return moment(arg.date).format('jD');
+        }
+    };
+}
 
 export default function fullcalendar({
     locale,
@@ -28,9 +113,22 @@ export default function fullcalendar({
     eventContent,
     eventDidMount,
     eventWillUnmount,
+    jalaali,
 }) {
     return {
         init() {
+            // Configure moment for Jalaali calendar if enabled
+            if (jalaali) {
+                moment.locale('fa');
+                moment.loadPersian({
+                    usePersianDigits: false,
+                    dialect: 'persian-modern'
+                });
+            }
+            
+            // Get Jalaali specific configuration
+            const jalaaliConfig = getJalaaliConfig(jalaali);
+            
             /** @type Calendar */
             const calendar = new Calendar(this.$el, {
                 headerToolbar: {
@@ -39,12 +137,13 @@ export default function fullcalendar({
                     'right': 'dayGridMonth,dayGridWeek,dayGridDay',
                 },
                 plugins: plugins.map(plugin => availablePlugins[plugin]),
-                locale,
+                locale: jalaali ? 'fa' : locale,
                 schedulerLicenseKey,
                 timeZone,
                 editable,
                 selectable,
                 ...config,
+                ...jalaaliConfig,
                 locales,
                 eventClassNames,
                 eventContent,

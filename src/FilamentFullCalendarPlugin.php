@@ -21,6 +21,8 @@ class FilamentFullCalendarPlugin implements Plugin
 
     protected ?bool $selectable = null;
 
+    protected ?bool $jalaali = null;
+
     public function getId(): string
     {
         return 'filament-fullcalendar';
@@ -128,5 +130,17 @@ class FilamentFullCalendarPlugin implements Plugin
     public function isSelectable(): bool
     {
         return $this->selectable ?? data_get($this->config, 'selectable', false);
+    }
+
+    public function jalaali(bool $jalaali = true): static
+    {
+        $this->jalaali = $jalaali;
+
+        return $this;
+    }
+
+    public function isJalaali(): bool
+    {
+        return $this->jalaali ?? data_get($this->config, 'jalaali', false);
     }
 }

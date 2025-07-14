@@ -93,3 +93,37 @@ html.dark .filament-fullcalendar {
 .filament-fullcalendar .fc-list-sticky .fc-list-day th {
     @apply bg-inherit;
 }
+
+/* Jalaali Calendar Styles */
+.filament-fullcalendar.jalaali-calendar {
+    direction: rtl;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-toolbar {
+    direction: rtl;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-toolbar-chunk {
+    direction: rtl;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-button-group {
+    direction: ltr;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-daygrid-day-number {
+    direction: ltr;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-col-header-cell {
+    text-align: center;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-event-title {
+    direction: rtl;
+    text-align: right;
+}
+
+.filament-fullcalendar.jalaali-calendar .fc-event-time {
+    direction: ltr;
+}

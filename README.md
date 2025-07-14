@@ -285,6 +285,27 @@ The configuration of the calendar. Not all configurations have a dedicated fluen
 
 `config` (Default: `[]`)
 
+### jalaali(`bool` $jalaali)
+Enable Jalaali (Persian/Shamsi) calendar support. This will display the calendar in Persian format with RTL layout, Persian month names, and proper date formatting.
+
+`jalaali` (Default: `false`)
+
+Example:
+```php
+FilamentFullCalendarPlugin::make()
+    ->jalaali(true)
+```
+
+Or enable it per widget:
+```php
+public function config(): array
+{
+    return [
+        'jalaali' => true,
+    ];
+}
+```
+
 <br>
 
 # Interacting with actions
