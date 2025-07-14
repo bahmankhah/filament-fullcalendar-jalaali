@@ -1,17 +1,17 @@
 {
-    "name": "saade/filament-fullcalendar",
+    "name": "hsm/filament-fullcalendar-jalaali",
     "description": "The Most Popular JavaScript Calendar integrated with Filament 💛",
     "keywords": [
-        "saade",
+        "hsm",
         "laravel",
         "filament-fullcalendar"
     ],
-    "homepage": "https://github.com/saade/filament-fullcalendar",
+    "homepage": "https://github.com/bahmankhah/filament-fullcalendar-jalaali",
     "license": "MIT",
     "authors": [
         {
-            "name": "Saade",
-            "email": "saade@outlook.com.br",
+            "name": "HSM",
+            "email": "hsm@outlook.com.br",
             "role": "Developer"
         }
     ],
